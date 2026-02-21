@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono Cube - Suivi Rubik's Cube</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="header">
+            <h1>Chrono Cube</h1>
+            <p>Suis tes records et progresse à chaque résolution ! 🚀</p>
+        </header>
+
+        <main class="main-content">
+            
+            <!-- Timer Section -->
+            <section class="glass-panel timer-section">
+                <div class="timer-display" id="time-display">00:00.000</div>
+                <div class="controls">
+                    <button id="start-btn" class="btn primary-btn" aria-label="Démarrer le chronomètre">Démarrer (Espace)</button>
+                    <button id="reset-btn" class="btn secondary-btn" aria-label="Réinitialiser le chronomètre">Réinitialiser</button>
+                    <button id="save-btn" class="btn success-btn" aria-label="Enregistrer le temps" disabled>Sauvegarder</button>
+                </div>
+                <!-- Adding Scramble -->
+                <div class="scramble-container">
+                    <span class="scramble-label">Mélange suggéré :</span>
+                    <div id="scramble-display" class="scramble-text">Génération...</div>
+                    <button id="new-scramble-btn" class="icon-btn" title="Nouveau mélange">🔄</button>
+                </div>
+            </section>
+
+            <!-- Dashboard Layout (History & Chart) -->
+            <div class="dashboard-grid">
+                
+                <!-- History Section -->
+                <section class="glass-panel history-section">
+                    <h2>Historique</h2>
+                    <div class="stats-summary">
+                        <div class="stat-box">
+                            <span class="stat-label">Record (PB)</span>
+                            <span class="stat-value pb-value" id="pb-display">--:--.---</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Moy. 5 (Ao5)</span>
+                            <span class="stat-value" id="ao5-display">--:--.---</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Résolutions</span>
+                            <span class="stat-value" id="count-display">0</span>
+                        </div>
+                    </div>
+                    <div class="history-list-container">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Temps</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-list">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <section class="glass-panel chart-section">
+                    <h2>Progression</h2>
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </section>
+                
+            </div>
+
+            <!-- Tips & Encouragement Section -->
+            <section class="glass-panel tips-section">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                    <h3 id="tip-title">Astuce du jour</h3>
+                    <p id="tip-text">Détends tes poignets et regarde plus loin (look ahead) pendant la résolution au lieu de te concentrer uniquement sur les pièces que tu as en main.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
