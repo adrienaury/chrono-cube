@@ -44,18 +44,18 @@ function generateScramble() {
     const modifiers = ['', "'", '2'];
     let scramble = [];
     let lastMove = '';
-    
+
     for (let i = 0; i < 20; i++) {
         let move;
         do {
             move = moves[Math.floor(Math.random() * moves.length)];
         } while (move === lastMove);
-        
+
         lastMove = move;
         const modifier = modifiers[Math.floor(Math.random() * modifiers.length)];
         scramble.push(move + modifier);
     }
-    
+
     return scramble.join(' ');
 }
 
@@ -65,16 +65,16 @@ function formatTime(ms) {
     let minutes = Math.floor(ms / 60000);
     let seconds = date.getSeconds();
     let milliseconds = date.getMilliseconds();
-    
+
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    
+
     if (milliseconds < 10) {
         milliseconds = "00" + milliseconds;
     } else if (milliseconds < 100) {
         milliseconds = "0" + milliseconds;
     }
-    
+
     return `${minutes}:${seconds}.${milliseconds}`;
 }
 
@@ -147,10 +147,10 @@ document.addEventListener('keydown', (e) => {
             timeDisplay.classList.add('ready');
             isReady = true;
         } else if (!running && difference > 0) {
-             // Reset if there is time
-             resetTimer();
-             timeDisplay.classList.add('ready');
-             isReady = true;
+            // Reset if there is time
+            resetTimer();
+            timeDisplay.classList.add('ready');
+            isReady = true;
         }
     }
 });
@@ -167,17 +167,17 @@ document.addEventListener('keyup', (e) => {
 
 // Event Listeners for UI buttons
 startBtn.addEventListener('click', () => {
-    if(running) {
+    if (running) {
         stopTimer()
     } else {
-        if(difference > 0) resetTimer();
+        if (difference > 0) resetTimer();
         startTimer();
     }
 });
 resetBtn.addEventListener('click', resetTimer);
 
 saveBtn.addEventListener('click', () => {
-    if(difference > 0) {
+    if (difference > 0) {
         saveSolve(difference);
         resetTimer();
         updateUI();
@@ -198,7 +198,7 @@ function saveSolve(timeMs) {
     };
     solves.unshift(solve); // Add to beginning
     localStorage.setItem('rubiksSolves', JSON.stringify(solves));
-    
+
     // Changing tip on save
     showRandomTip();
 }
@@ -213,15 +213,15 @@ function deleteSolve(id) {
 
 function calculateAo5() {
     if (solves.length < 5) return null;
-    
+
     // Take the last 5 solves (they are at the beginning of the array)
     const last5 = solves.slice(0, 5).map(s => s.time);
-    
+
     // Sort to remove best and worst
     last5.sort((a, b) => a - b);
     last5.pop(); // Remove worst
     last5.shift(); // Remove best
-    
+
     // Calculate average
     const sum = last5.reduce((a, b) => a + b, 0);
     return sum / 3;
@@ -243,7 +243,7 @@ function updateUI() {
     renderHistory();
     updateStats();
     renderChart();
-    
+
     // Update scramble
     scrambleDisplay.textContent = generateScramble();
 }
@@ -251,17 +251,17 @@ function updateUI() {
 function renderHistory() {
     historyList.innerHTML = '';
     const pb = getPB();
-    
+
     // Pagination or slicing can be added, but keeping it simple for now (latest 50)
     const displaySolves = solves.slice(0, 50);
-    
+
     displaySolves.forEach((solve, index) => {
         const tr = document.createElement('tr');
         const isPB = solve.time === pb;
-        
+
         const dateObj = new Date(solve.date);
-        const dateStr = `${dateObj.getDate()}/${dateObj.getMonth()+1} ${dateObj.getHours()}:${(dateObj.getMinutes()<10?'0':'') + dateObj.getMinutes()}`;
-        
+        const dateStr = `${dateObj.getDate()}/${dateObj.getMonth() + 1} ${dateObj.getHours()}:${(dateObj.getMinutes() < 10 ? '0' : '') + dateObj.getMinutes()}`;
+
         tr.innerHTML = `
             <td>${solves.length - index}</td>
             <td class="time ${isPB ? 'is-pb' : ''}">${formatTime(solve.time)}${isPB ? ' 🔥' : ''}</td>
@@ -276,10 +276,10 @@ function renderHistory() {
 
 function updateStats() {
     countDisplay.textContent = solves.length;
-    
+
     const pb = getPB();
     pbDisplay.textContent = pb ? formatTime(pb) : '--:--.---';
-    
+
     const ao5 = calculateAo5();
     ao5Display.textContent = ao5 ? formatTime(ao5) : '--:--.---';
 }
@@ -335,7 +335,7 @@ function renderChart() {
                     padding: 10,
                     displayColors: false,
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             return `Temps: ${context.parsed.y.toFixed(2)}s`;
                         }
                     }
@@ -377,3 +377,16 @@ function renderChart() {
 // Init
 showRandomTip();
 updateUI();
+
+// Service Worker Registration for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    });
+}

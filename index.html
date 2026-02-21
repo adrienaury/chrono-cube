@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chrono Cube - Suivi Rubik's Cube</title>
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="apple-touch-icon" href="icon.svg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="app-container">
-        
+
         <header class="header">
             <h1>Chrono Cube</h1>
             <p>Suis tes records et progresse à chaque résolution ! 🚀</p>
         </header>
 
         <main class="main-content">
-            
+
             <!-- Timer Section -->
             <section class="glass-panel timer-section">
                 <div class="timer-display" id="time-display">00:00.000</div>
                 <div class="controls">
-                    <button id="start-btn" class="btn primary-btn" aria-label="Démarrer le chronomètre">Démarrer (Espace)</button>
-                    <button id="reset-btn" class="btn secondary-btn" aria-label="Réinitialiser le chronomètre">Réinitialiser</button>
-                    <button id="save-btn" class="btn success-btn" aria-label="Enregistrer le temps" disabled>Sauvegarder</button>
+                    <button id="start-btn" class="btn primary-btn" aria-label="Démarrer le chronomètre">Démarrer
+                        (Espace)</button>
+                    <button id="reset-btn" class="btn secondary-btn"
+                        aria-label="Réinitialiser le chronomètre">Réinitialiser</button>
+                    <button id="save-btn" class="btn success-btn" aria-label="Enregistrer le temps"
+                        disabled>Sauvegarder</button>
                 </div>
                 <!-- Adding Scramble -->
                 <div class="scramble-container">
@@ -40,7 +53,7 @@
 
             <!-- Dashboard Layout (History & Chart) -->
             <div class="dashboard-grid">
-                
+
                 <!-- History Section -->
                 <section class="glass-panel history-section">
                     <h2>Historique</h2>
@@ -82,7 +95,7 @@
                         <canvas id="progressChart"></canvas>
                     </div>
                 </section>
-                
+
             </div>
 
             <!-- Tips & Encouragement Section -->
@@ -90,7 +103,8 @@
                 <div class="tip-icon">💡</div>
                 <div class="tip-content">
                     <h3 id="tip-title">Astuce du jour</h3>
-                    <p id="tip-text">Détends tes poignets et regarde plus loin (look ahead) pendant la résolution au lieu de te concentrer uniquement sur les pièces que tu as en main.</p>
+                    <p id="tip-text">Détends tes poignets et regarde plus loin (look ahead) pendant la résolution au
+                        lieu de te concentrer uniquement sur les pièces que tu as en main.</p>
                 </div>
             </section>
 
@@ -99,4 +113,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
